@@ -50,7 +50,7 @@ class Follow(models.Model):
                 fields=['follower', 'following'], name='unique_follow'
             ),
             models.CheckConstraint(
-                check=~models.Q(follower=models.F('following')),
+                condition=~models.Q(follower=models.F('following')),
                 name='cannot_follow_self',
             ),
         ]
