@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
-from django.views.generic import CreateView
+from django.views.generic import CreateView, TemplateView
 
 from posts.forms import PostForm
 
