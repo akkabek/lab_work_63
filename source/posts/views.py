@@ -15,4 +15,5 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('posts:detail', kwargs={'pk': self.object.pk})
+        return reverse('accounts:profile', kwargs={'pk': self.object.pk})
+
