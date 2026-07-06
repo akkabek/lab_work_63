@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand bg-white border-bottom shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fst-italic fw-bold" href="{% url 'posts:feed' %}">Instagram</a>
+
+        <form class="d-flex flex-grow-1 mx-4" style="max-width: 300px;" action="{% url 'accounts:search' %}" method="get">
+            <input class="form-control form-control-sm bg-light" type="search" name="q"
+                   placeholder="Поиск" value="{{ request.GET.q }}">
+        </form>
+
+        <div class="d-flex align-items-center gap-3">
+            {% if user.is_authenticated %}
+                <a class="fs-4 text-decoration-none" href="#" title="Добавить публикацию">+</a>
+                <a href="#" title="Профиль {{ user.username }}">
+                    {% if user.avatar %}
+                        <img src="{{ user.avatar.url }}" alt="{{ user.username }}"
+                             class="rounded-circle object-fit-cover" width="32" height="32">
+                    {% else %}
+                        <span class="d-inline-block rounded-circle bg-secondary-subtle" style="width:32px;height:32px;"></span>
+                    {% endif %}
+                </a>
+                <form action="{% url 'accounts:logout' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-link btn-sm text-decoration-none p-0">Выйти</button>
+                </form>
+            {% else %}
+                <a class="btn btn-outline-primary btn-sm" href="{% url 'accounts:login' %}">Войти</a>
+                <a class="btn btn-primary btn-sm" href="{% url 'accounts:register' %}">Регистрация</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
