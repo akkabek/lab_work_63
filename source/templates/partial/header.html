@@ -1,17 +1,16 @@
 <nav class="navbar navbar-expand bg-white border-bottom shadow-sm">
     <div class="container">
-        <a class="navbar-brand fst-italic fw-bold" href="#">Instagram</a>
+        <a class="navbar-brand fst-italic fw-bold" href="{% url 'posts:feed' %}">Instagram</a>
 
-        <form class="d-flex flex-grow-1 mx-4" style="max-width: 300px;"
-              action="{% url 'accounts:search' %}" method="get">
+        <form class="d-flex flex-grow-1 mx-4" style="max-width: 300px;" action="{% url 'accounts:search' %}" method="get">
             <input class="form-control form-control-sm bg-light" type="search" name="q"
                    placeholder="Поиск" value="{{ request.GET.q }}">
         </form>
 
         <div class="d-flex align-items-center gap-3">
             {% if user.is_authenticated %}
-                <a class="fs-4 text-decoration-none" href="#" title="Добавить публикацию">+</a>
-                <a href="#" title="Профиль {{ user.username }}">
+                <a class="fs-4 text-decoration-none" href="{% url 'posts:create' %}" title="Добавить публикацию">+</a>
+                <a href="{% url 'accounts:profile' username=user.username %}" title="Профиль {{ user.username }}">
                     {% if user.avatar %}
                         <img src="{{ user.avatar.url }}" alt="{{ user.username }}"
                              class="rounded-circle object-fit-cover" width="32" height="32">

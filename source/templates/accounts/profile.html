@@ -24,7 +24,7 @@
                         Редактировать профиль
                     </button>
                 {% else %}
-                    <form method="post" action="#">
+                    <form method="post" action="{% url 'accounts:follow_toggle' username=profile_user.username %}">
                         {% csrf_token %}
                         {% if is_following %}
                             <button type="submit" class="btn btn-outline-secondary btn-sm">Отписаться</button>
@@ -51,7 +51,7 @@
     <div class="row row-cols-3 g-1">
         {% for post in posts %}
             <div class="col">
-                <a href="#" class="ratio ratio-1x1 d-block">
+                <a href="{% url 'posts:detail' pk=post.pk %}" class="ratio ratio-1x1 d-block">
                     <img src="{{ post.image.url }}" class="object-fit-cover" alt="post">
                 </a>
             </div>
