@@ -1,9 +1,11 @@
 from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView
 
 from .forms import LoginForm, RegistrationForm
+from .models import User
 
 
 class RegisterView(CreateView):
@@ -25,3 +27,18 @@ class UserLoginView(LoginView):
 
 class UserLogoutView(LogoutView):
     next_page = reverse_lazy('accounts:login')
+
+
+class ProfileView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = 'accounts/profile.html'
+    context_object_name = 'profile_user'
+    slug_field = 'username'
+    slug_url_kwarg = 'username'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile_user = self.object
+        context['posts'] = profile_user.posts.all()
+        context['is_own_profile'] = profile_user == self.request.user
+        return context
