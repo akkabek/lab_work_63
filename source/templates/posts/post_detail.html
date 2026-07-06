@@ -1,0 +1,56 @@
+{% extends 'partial/base.html' %}
+
+{% block title %}Публикация {{ post.author.username }} — Instagram{% endblock %}
+
+{% block content %}
+<div class="container py-4" style="max-width: 630px;">
+    <div class="card shadow-sm">
+        <div class="card-header bg-white d-flex align-items-center gap-2 border-0 pt-3">
+            {% if post.author.avatar %}
+                <img src="{{ post.author.avatar.url }}" alt="{{ post.author.username }}"
+                     class="rounded-circle object-fit-cover" width="32" height="32">
+            {% endif %}
+            <a class="fw-semibold text-decoration-none text-dark" href="{% url 'accounts:profile' username=post.author.username %}">
+                {{ post.author.username }}
+            </a>
+        </div>
+
+        <img src="{{ post.image.url }}" class="card-img-top object-fit-cover" style="max-height: 600px;" alt="post">
+
+        <div class="card-body pb-0">
+            <form method="post" action="{% url 'posts:like' pk=post.pk %}" class="d-inline">
+                {% csrf_token %}
+                {% if post.liked_by_user %}
+                    <button type="submit" class="btn btn-link fs-4 p-0 text-decoration-none" disabled title="Вы уже лайкнули">❤️</button>
+                {% else %}
+                    <button type="submit" class="btn btn-link fs-4 p-0 text-decoration-none" title="Нравится">🤍</button>
+                {% endif %}
+            </form>
+
+            <p class="fw-semibold mt-2 mb-1">{{ post.likes_count }} отметок «Нравится»</p>
+
+            {% if post.caption %}
+                <p class="mb-1"><span class="fw-semibold">{{ post.author.username }}</span> {{ post.caption }}</p>
+            {% endif %}
+
+            <p class="text-muted text-uppercase mb-2" style="font-size: 11px;">{{ post.created_at }}</p>
+        </div>
+
+        <ul class="list-group list-group-flush">
+            {% for comment in comments %}
+                <li class="list-group-item">
+                    <span class="fw-semibold">{{ comment.author.username }}</span> {{ comment.text }}
+                </li>
+            {% empty %}
+                <li class="list-group-item text-muted">Комментариев пока нет</li>
+            {% endfor %}
+        </ul>
+
+        <form class="card-body d-flex gap-2 border-top" method="post" action="{% url 'posts:comment' pk=post.pk %}">
+            {% csrf_token %}
+            {{ comment_form.text }}
+            <button type="submit" class="btn btn-link text-decoration-none fw-semibold">Опубликовать</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,42 @@
+<div class="card shadow-sm mb-4">
+    <div class="card-header bg-white d-flex align-items-center gap-2 border-0 pt-3">
+        {% if post.author.avatar %}
+            <img src="{{ post.author.avatar.url }}" alt="{{ post.author.username }}"
+                 class="rounded-circle object-fit-cover" width="32" height="32">
+        {% endif %}
+        <a class="fw-semibold text-decoration-none text-dark" href="{% url 'accounts:profile' username=post.author.username %}">
+            {{ post.author.username }}
+        </a>
+    </div>
+
+    <a href="{% url 'posts:detail' pk=post.pk %}">
+        <img src="{{ post.image.url }}" class="card-img-top object-fit-cover" style="max-height: 600px;" alt="post">
+    </a>
+
+    <div class="card-body">
+        <form method="post" action="{% url 'posts:like' pk=post.pk %}" class="d-inline">
+            {% csrf_token %}
+            {% if post.liked_by_user %}
+                <button type="submit" class="btn btn-link fs-4 p-0 text-decoration-none" disabled title="Вы уже лайкнули">❤️</button>
+            {% else %}
+                <button type="submit" class="btn btn-link fs-4 p-0 text-decoration-none" title="Нравится">🤍</button>
+            {% endif %}
+        </form>
+
+        <p class="fw-semibold mt-2 mb-1">{{ post.likes_count }} отметок «Нравится»</p>
+
+        {% if post.caption %}
+            <p class="mb-1"><span class="fw-semibold">{{ post.author.username }}</span> {{ post.caption }}</p>
+        {% endif %}
+
+        <a class="d-block text-muted small text-decoration-none mb-1" href="{% url 'posts:detail' pk=post.pk %}">
+            {% if post.comments_count %}
+                Посмотреть все комментарии ({{ post.comments_count }})
+            {% else %}
+                Добавить комментарий
+            {% endif %}
+        </a>
+
+        <p class="text-muted text-uppercase mb-0" style="font-size: 11px;">{{ post.created_at }}</p>
+    </div>
+</div>
