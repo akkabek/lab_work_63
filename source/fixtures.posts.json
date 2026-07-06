@@ -1,0 +1,97 @@
+[
+{
+  "model": "posts.post",
+  "pk": 1,
+  "fields": {
+    "author": [
+      "user"
+    ],
+    "image": "posts/Mushu-PNG-Image-Background_hDdoWpu.png",
+    "caption": "my avatar",
+    "created_at": "2026-07-06T11:45:10.931Z"
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 2,
+  "fields": {
+    "author": [
+      "user"
+    ],
+    "image": "posts/Mushu-PNG-Image-Background_k0iGoRJ.png",
+    "caption": "my avatar",
+    "created_at": "2026-07-06T11:46:53.289Z"
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 3,
+  "fields": {
+    "author": [
+      "user2"
+    ],
+    "image": "posts/Mushu-PNG-Image-Background_QB076Gr.png",
+    "caption": "user 2",
+    "created_at": "2026-07-06T12:52:22.260Z"
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 4,
+  "fields": {
+    "author": [
+      "user2"
+    ],
+    "image": "posts/Mushu-PNG-Image-Background_SdaJNC1.png",
+    "caption": "user 2",
+    "created_at": "2026-07-06T12:52:33.876Z"
+  }
+},
+{
+  "model": "posts.post",
+  "pk": 5,
+  "fields": {
+    "author": [
+      "user2"
+    ],
+    "image": "posts/Mushu-PNG-Image-Background_T7Wh8G6.png",
+    "caption": "user 2",
+    "created_at": "2026-07-06T12:53:32.107Z"
+  }
+},
+{
+  "model": "posts.like",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "post": 2,
+    "created_at": "2026-07-06T12:44:16.606Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 1,
+  "fields": {
+    "post": 2,
+    "author": [
+      "user"
+    ],
+    "text": "йоу",
+    "created_at": "2026-07-06T12:44:28.414Z"
+  }
+},
+{
+  "model": "posts.comment",
+  "pk": 2,
+  "fields": {
+    "post": 1,
+    "author": [
+      "user"
+    ],
+    "text": "очень круто",
+    "created_at": "2026-07-06T12:45:39.884Z"
+  }
+}
+]
