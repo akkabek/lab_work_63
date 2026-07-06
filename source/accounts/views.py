@@ -44,6 +44,11 @@ class ProfileView(LoginRequiredMixin, DetailView):
         profile_user = self.object
         context['posts'] = profile_user.posts.all()
         context['is_own_profile'] = profile_user == self.request.user
+        context['is_following'] = (
+            Follow.objects.filter(follower=self.request.user, following=profile_user).exists()
+            if profile_user != self.request.user
+            else False
+        )
         return context
 
 class UserSearchView(LoginRequiredMixin, ListView):
