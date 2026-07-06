@@ -1,0 +1,35 @@
+{% extends 'partial/base.html' %}
+
+{% block title %}Поиск — Instagram{% endblock %}
+
+{% block content %}
+<div class="container py-4" style="max-width: 630px;">
+    <h2 class="fs-5 mb-3">Результаты поиска{% if query %} по запросу «{{ query }}»{% endif %}</h2>
+
+    <div class="list-group">
+        {% for found_user in found_users %}
+            <a class="list-group-item list-group-item-action d-flex align-items-center gap-3"
+               href="{% url 'accounts:profile' username=found_user.username %}">
+                {% if found_user.avatar %}
+                    <img src="{{ found_user.avatar.url }}" alt="{{ found_user.username }}"
+                         class="rounded-circle object-fit-cover" width="44" height="44">
+                {% else %}
+                    <span class="d-inline-block rounded-circle bg-secondary-subtle" style="width:44px;height:44px;"></span>
+                {% endif %}
+                <div>
+                    <div class="fw-semibold">{{ found_user.username }}</div>
+                    {% if found_user.first_name %}
+                        <div class="text-muted small">{{ found_user.first_name }}</div>
+                    {% endif %}
+                </div>
+            </a>
+        {% empty %}
+            {% if query %}
+                <div class="text-center text-muted py-5">Ничего не найдено</div>
+            {% else %}
+                <div class="text-center text-muted py-5">Введите запрос в поле поиска вверху страницы</div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
