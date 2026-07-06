@@ -27,3 +27,33 @@ class User(AbstractUser):
     @property
     def following_count(self):
         return self.following.count() if hasattr(self, 'following') else 0
+
+class Follow(models.Model):
+
+    follower = models.ForeignKey(
+        User,
+        related_name='following',
+        on_delete=models.CASCADE,
+        verbose_name='Подписчик',
+    )
+    following = models.ForeignKey(
+        User,
+        related_name='followers',
+        on_delete=models.CASCADE,
+        verbose_name='Автор, на которого подписались',
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['follower', 'following'], name='unique_follow'
+            ),
+            models.CheckConstraint(
+                check=~models.Q(follower=models.F('following')),
+                name='cannot_follow_self',
+            ),
+        ]
+
+    def __str__(self):
+        return f'{self.follower} -> {self.following}'
