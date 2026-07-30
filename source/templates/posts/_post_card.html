@@ -14,16 +14,15 @@
     </a>
 
     <div class="card-body">
-        <form method="post" action="{% url 'posts:like' pk=post.pk %}" class="d-inline">
-            {% csrf_token %}
-            {% if post.liked_by_user %}
-                <button type="submit" class="btn btn-link fs-4 p-0 text-decoration-none" disabled title="Вы уже лайкнули">❤️</button>
-            {% else %}
-                <button type="submit" class="btn btn-link fs-4 p-0 text-decoration-none" title="Нравится">🤍</button>
-            {% endif %}
-        </form>
+        <button type="button"
+                class="js-like-btn btn btn-link fs-4 p-0 text-decoration-none"
+                data-post-id="{{ post.pk }}"
+                data-liked="{% if post.liked_by_user %}true{% else %}false{% endif %}"
+                title="{% if post.liked_by_user %}Вы уже лайкнули{% else %}Нравится{% endif %}">
+            {% if post.liked_by_user %}❤️{% else %}🤍{% endif %}
+        </button>
 
-        <p class="fw-semibold mt-2 mb-1">{{ post.likes_count }} отметок «Нравится»</p>
+        <p class="js-likes-count fw-semibold mt-2 mb-1" data-post-id="{{ post.pk }}">{{ post.likes_count }} отметок «Нравится»</p>
 
         {% if post.caption %}
             <p class="mb-1"><span class="fw-semibold">{{ post.author.username }}</span> {{ post.caption }}</p>
